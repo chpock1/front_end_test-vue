@@ -5,7 +5,7 @@
 		.marginWithGroup
 			span Ваш филиал
 			span.starValidate(v-if="getDisabledCity") *
-			select.form-select.my-2(v-model="form.city" :disabled="form.online")
+			select.form-select.my-2.w-auto(v-model="form.city" :disabled="form.online" v-if="arrayCities.length")
 				option(v-for="city in arrayCities" :value="city.title" :key="city.id") {{city.title}}
 			input.form-check-input(type="checkbox" v-model="form.online" id="checkbox")
 			label(for="checkbox") Онлайн
@@ -13,9 +13,10 @@
 			span Тема обращения
 			span.starValidate(v-if="getDisabledTheme") *
 			.form-check(v-for="(them, index) in arrayThemes" :key="index")
-				input.form-check-input(v-model="form.theme" type="radio" :value="them"  @input="form.customTheme=''")
-				label.form-check-label {{them}}
-			input.form-control(v-model="form.customTheme" @input="form.theme=''" placeholder="Другое")
+				input.form-check-input(:id="'check'+index" v-model="form.theme" type="radio" :value="them"
+					@input="form.customTheme=''")
+				label.form-check-label(:for="'check'+index") {{them}}
+			input.form-control.w-auto(v-model="form.customTheme" @input="form.theme=''" placeholder="Другое")
 		.marginWithGroup
 			span Описание проблемы
 			span.starValidate(v-if="getDisabledDescription") *
