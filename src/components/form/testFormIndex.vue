@@ -4,23 +4,22 @@
 	form.formBox(@submit.prevent="$_test_form_submit")
 		.marginWithGroup
 			span Ваш филиал
-			span.starValidate *
-			select.form-select.my-2(v-model="form.city" :disabled="form.online" :class="{warning:getDisabledCity}")
+			span.starValidate(v-if="getDisabledCity") *
+			select.form-select.my-2(v-model="form.city" :disabled="form.online")
 				option(v-for="city in arrayCities" :value="city.title" :key="city.id") {{city.title}}
 			input.form-check-input(type="checkbox" v-model="form.online" id="checkbox")
 			label(for="checkbox") Онлайн
 		.marginWithGroup
 			span Тема обращения
-			span.starValidate *
+			span.starValidate(v-if="getDisabledTheme") *
 			.form-check(v-for="(them, index) in arrayThemes" :key="index")
-				input.form-check-input(:class="{warning:getDisabledTheme}" v-model="form.theme" type="radio" :value="them"  @input="form.customTheme=''")
+				input.form-check-input(v-model="form.theme" type="radio" :value="them"  @input="form.customTheme=''")
 				label.form-check-label {{them}}
-			input.form-control(:class="{warning:getDisabledTheme}" v-model="form.customTheme" @input="form.theme=''" placeholder="Другое")
+			input.form-control(v-model="form.customTheme" @input="form.theme=''" placeholder="Другое")
 		.marginWithGroup
 			span Описание проблемы
-			span.starValidate *
-			textarea.form-control(v-model="form.description" placeholder="Введите текст"
-				:class="{warning:getDisabledDescription}")
+			span.starValidate(v-if="getDisabledDescription") *
+			textarea.form-control(v-model="form.description" placeholder="Введите текст")
 		.marginWithGroup
 			p Загрузка документов
 			span.fileDescription Приложите, пожалуйста, полноэкранный скриншот. это поможет быстрее решить проблему
@@ -116,6 +115,9 @@ export default {
 	margin-top: 50px;
 	padding: 30px;
 	text-align: left;
+	border: 1px solid grey;
+	box-shadow: grey;
+	border-radius: 15px;
 }
 .starValidate{
 	color: red;
